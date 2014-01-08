@@ -27,13 +27,17 @@ RPROMPT="%{$fg_bold[white]%}[%{$reset_color%}%{$fg[cyan]%}%~%{$reset_color%}%{$f
 SPROMPT="%{$fg_bold[red]%}correct%{$reset_color%}: %R -> %r ? "
 
 bindkey -e
-autoload -Uz compinit
-compinit
+autoload -U compinit
+compinit -u
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
-autoload -Uz colors
+autoload -U colors
 colors
-zstyle ':completion:*' list-colors "${LS_COLORS}"
+export LSCOLORS=HxFxCxdxBxegedabagacad
+export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+export ZLS_COLORS=$LS_COLORS
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' menu select=1
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:git:*' check-for-changes true
@@ -44,8 +48,8 @@ zstyle ':vcs_info:git:*' formats       '%F{5}[%f%s%F{5}]%F{3}%F{5}[%f%r%F{5}]%F{
 precmd() { vcs_info }
 RPROMPT='${vcs_info_msg_0_}%f'
 
-setopt nobeep
-setopt complete_aliases
+setopt no_beep
+unsetopt complete_aliases
 setopt magic_equal_subst
 setopt list_packed
 setopt auto_list
@@ -57,6 +61,11 @@ setopt print_eight_bit
 setopt auto_param_keys
 setopt auto_param_slash
 setopt correct
+setopt append_history
+unsetopt ignore_eof
+setopt hist_ignore_dups
+
+bindkey "^[[Z" reverse-menu-complete
 
 cvs() {
     if [ $1 = "cat" ] ; then

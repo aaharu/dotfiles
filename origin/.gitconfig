@@ -1,0 +1,8 @@
+[color]
+	ui = true
+[alias]
+	co = checkout
+	st = status
+	br = branch
+	ci = commit
+	di = diff

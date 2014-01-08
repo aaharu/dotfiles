@@ -9,9 +9,7 @@ mkdir build
 find ./origin | while read ORIGIN
 do
     FILE=${ORIGIN#./origin/}
-    if [ $FILE = "./origin" ] ; then
-        continue
-    fi
+    [ $FILE = "./origin" ] && continue
     if [ -d $ORIGIN ] ; then
         mkdir -p "build/${FILE}"
         continue
@@ -38,7 +36,8 @@ do
     case $FILE in
         "./replace"|".gitkeep") continue ;;
     esac
-    if [ -e "build/${FILE}" ] ; then
+    [ -e "build/${FILE}" ] && continue
+    if [ -d "build/${FILE}" ] ; then
         mkdir -p "build/${FILE}"
         continue
     fi
@@ -51,7 +50,8 @@ do
     case $FILE in
         "./catenate"|".gitkeep") continue ;;
     esac
-    if [ -e "build/${FILE}" ] ; then
+    [ -e "build/${FILE}" ] && continue
+    if [ -d "build/${FILE}" ] ; then
         mkdir -p "build/${FILE}"
         continue
     fi
@@ -64,7 +64,7 @@ do
     case $FILE in
         "."|"..") continue ;;
     esac
-    echo "================"
-    echo "create ${FILE}"
+    echo ""
+    echo "[info] create ${FILE}"
     ln -ins `pwd`/$BUILD $HOME/$FILE
 done
