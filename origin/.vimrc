@@ -8,9 +8,6 @@ set fileencoding=utf-8
 set fileformats=unix
 set backspace=2
 
-syntax on
-colorscheme darkblue
-
 set nobackup
 set autoread
 
@@ -61,6 +58,16 @@ inoremap <c-p> <Up>
 noremap <c-n> <Down>
 inoremap <c-n> <Down>
 
+if has('syntax') && &t_Co > 2
+    if stridx($TERM, "256") >= 0
+        set t_Co=256
+    endif
+
+    syntax enable
+endif
+set background=dark
+colorscheme darkblue
+
 if has('vim_starting')
     set nocompatible               " Be iMproved
     set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -74,7 +81,12 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'Shougo/neocomplcache.vim'
 NeoBundle 'kchmck/vim-coffee-script'
-
-NeoBundleCheck
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'ujihisa/unite-colorscheme'
 
 filetype indent plugin on
+
+NeoBundleCheck

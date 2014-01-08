@@ -1,10 +1,6 @@
-#!/bin/sh -eu
+#!/bin/sh -u
 
-if [ -d ./build ] ; then
-#    mv -f ./build /tmp
-    rm -rf ./build
-fi
-mkdir build
+[ ! -d ./build ] && mkdir build
 
 find ./origin | while read ORIGIN
 do
@@ -64,6 +60,9 @@ do
     case $FILE in
         "."|"..") continue ;;
     esac
+    if [ -d $HOME/$FILE -a ! -L $HOME/$FILE ] ; then
+        rm -ir $HOME/$FILE
+    fi
     echo ""
     echo "[info] create ${FILE}"
     ln -ins `pwd`/$BUILD $HOME/$FILE
