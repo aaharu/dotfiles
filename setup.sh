@@ -1,25 +1,29 @@
 #!/bin/sh -eu
 
-#if [ -d ./build ] ; then
+if [ -d ./build ] ; then
 #    mv -f ./build /tmp
-#fi
+    rm -rf ./build
+fi
+mkdir build
 
 find ./origin | while read ORIGIN
 do
     FILE=${ORIGIN#./origin/}
-    if [ $FILE = "./origin" ] ; then ; continue ; fi
+    if [ $FILE = "./origin" ] ; then
+        continue
+    fi
     if [ -d $ORIGIN ] ; then
         mkdir -p "build/${FILE}"
         continue
     fi
 
-    $REPLACE="./replace/${FILE}"
+    REPLACE="./replace/${FILE}"
     if [ -f $REPLACE ] ; then
         cp $REPLACE "build/${FILE}"
         continue
     fi
 
-    $CATENATE="./catenate/${FILE}"
+    CATENATE="./catenate/${FILE}"
     if [ -f $CATENATE ] ; then
         cat $ORIGIN $CATENATE > "build/${FILE}"
         continue
@@ -61,7 +65,6 @@ do
         "."|"..") continue ;;
     esac
     echo "================"
-    echo $FILE
+    echo "create ${FILE}"
     ln -ins `pwd`/$BUILD $HOME/$FILE
-    echo ""
 done
