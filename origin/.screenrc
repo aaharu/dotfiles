@@ -1,0 +1,12 @@
+startup_message off
+vbell off
+escape ^O^O
+defscrollback 99999
+autodetach on
+
+msgwait 3
+msgminwait 2
+
+shell zsh
+
+bind s colon 'screen ssh '

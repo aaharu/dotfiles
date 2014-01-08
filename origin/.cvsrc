@@ -1,0 +1,5 @@
+cvs -q -z6
+update -P
+checkout -P
+remove -f
+diff -uN
