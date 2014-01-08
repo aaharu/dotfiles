@@ -23,7 +23,7 @@
 
 (keyboard-translate ?\C-h ?\C-?)
 
-(let ((default-directory "~/.emacs.d/site-list"))
+(let ((default-directory "~/.emacs.d/site-lisp"))
     (setq loat-path (cons default-directory load-path))
     (normal-top-level-add-subdirs-to-load-path))
 
@@ -42,3 +42,6 @@
 (setq history-length 1000)
 (setq undo-limit 100000)
 (setq undo-strong-limit 100000)
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
+(load-theme 'solarized-dark t)
