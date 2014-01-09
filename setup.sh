@@ -2,10 +2,12 @@
 
 [ ! -d ./build ] && mkdir build
 
-find ./origin | while read ORIGIN
+find ./origin -type d -name '.git' -prune -o -type f -o -type d | while read ORIGIN
 do
     FILE=${ORIGIN#./origin/}
-    [ $FILE = "./origin" ] && continue
+    case $FILE in
+        "./origin"|*/\.git) continue ;;
+    esac
     if [ -d $ORIGIN ] ; then
         mkdir -p "build/${FILE}"
         continue
@@ -26,44 +28,57 @@ do
     cp $ORIGIN "build/${FILE}"
 done
 
-find ./replace | while read REPLACE
+find ./replace -type d -name '.git' -prune -o -type f -o -type d | while read REPLACE
 do
     FILE=${REPLACE#./replace/}
     case $FILE in
-        "./replace"|".gitkeep") continue ;;
+        "./replace"|".gitkeep"|*/\.git) continue ;;
     esac
     [ -e "build/${FILE}" ] && continue
-    if [ -d "build/${FILE}" ] ; then
+    if [ -d $REPLACE ] ; then
         mkdir -p "build/${FILE}"
         continue
     fi
     cp $REPLACE "build/${FILE}"
 done
 
-find ./catenate | while read CATENATE
+find ./catenate -type d -name '.git' -prune -o -type f -o -type d | while read CATENATE
 do
     FILE=${CATENATE#./catenate/}
     case $FILE in
-        "./catenate"|".gitkeep") continue ;;
+        "./catenate"|".gitkeep"|*/\.git) continue ;;
     esac
     [ -e "build/${FILE}" ] && continue
-    if [ -d "build/${FILE}" ] ; then
+    if [ -d $CATENATE ] ; then
         mkdir -p "build/${FILE}"
         continue
     fi
     cp $CATENATE "build/${FILE}"
 done
 
-for BUILD in ./build/* ./build/.*
+SKIP=""
+for BUILD in $(find ./build -type d -name '.git' -prune -o -type f -o -type d)
 do
     FILE=${BUILD#./build/}
     case $FILE in
-        "."|"..") continue ;;
+        "./build"|*/\.git) continue ;;
     esac
-    if [ -d $HOME/$FILE -a ! -L $HOME/$FILE ] ; then
-        rm -ir $HOME/$FILE
+    [ ! "${SKIP}" = "" ] && case $FILE in
+        ${SKIP}/*) continue ;;
+    esac
+    if [ -L $HOME/$FILE ] ; then
+        SKIP=$FILE
+        continue
+    elif [ -d $HOME/$FILE -a -d $BUILD ] ; then
+        continue
+    elif [ -d $HOME/$FILE -a -f $BUILD ] ; then
+        echo "conflict ${HOME}/${FILE} and ${BUILD}"
+        exit 1
     fi
     echo ""
     echo "[info] create ${FILE}"
     ln -ins `pwd`/$BUILD $HOME/$FILE
+    if [ -d $BUILD ] ; then
+        SKIP=$FILE
+    fi
 done

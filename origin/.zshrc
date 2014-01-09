@@ -22,10 +22,6 @@ alias svi='sudo vim'
 
 export PATH="$HOME/bin:$PATH"
 
-PROMPT="$ "
-RPROMPT="%{$fg_bold[white]%}[%{$reset_color%}%{$fg[cyan]%}%~%{$reset_color%}%{$fg_bold[white]%}]%{$reset_color%}"
-SPROMPT="%{$fg_bold[red]%}correct%{$reset_color%}: %R -> %r ? "
-
 bindkey -e
 autoload -U compinit
 compinit -u
@@ -33,20 +29,31 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 autoload -U colors
 colors
-export LSCOLORS=HxFxCxdxBxegedabagacad
-export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
 export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:default' menu select=1
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "+"
-zstyle ':vcs_info:git:*' unstagedstr "-"
-zstyle ':vcs_info:git:*' actionformats '%F{5}[%f%s%F{5}]%F{3}%F{5}[%f%r%F{5}]%F{3}%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f%F{1}%u%f%F{6}%c%f'
-zstyle ':vcs_info:git:*' formats       '%F{5}[%f%s%F{5}]%F{3}%F{5}[%f%r%F{5}]%F{3}%F{5}[%F{2}%b%F{5}]%F{1}%u%f%F{6}%c%f'
-precmd() { vcs_info }
-RPROMPT='${vcs_info_msg_0_}%f'
+local          RED=$'%{\e[0;31m%}'
+local        GREEN=$'%{\e[0;32m%}'
+local         BLUE=$'%{\e[0;34m%}'
+local    DARK_GRAY=$'%{\e[1;30m%}'
+local       YELLOW=$'%{\e[1;33m%}'
+local LIGHT_PURPLE=$'%{\e[1;35m%}'
+local      DEFAULT=$'%{\e[1;m%}'
+autoload -Uz is-at-least
+if is-at-least 4.3.10; then
+    autoload -Uz vcs_info
+    zstyle ':vcs_info:*' enable git svn
+    zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}[%s %b] %{'$reset_color'%}'
+    precmd () {
+        LANG=en_US.UTF-8 vcs_info
+        PROMPT="${vcs_info_msg_0_}% %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
+    }
+else
+    PROMPT="$ "
+fi
+SHORTHOST=`hostname`
+RPROMPT="%(?..$RED%?) $DARK_GRAY%* $BLUE${USER}$DEFAULT@$GREEN$SHORTHOST$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
 
 setopt no_beep
 unsetopt complete_aliases
@@ -77,31 +84,31 @@ cvs() {
 
 ff() {
     if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn|.git' -prune -o -type f`
+        F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
         shift 1
         echo $F | grep $@
     else
-        find . -type d -name '.svn|.git' -prune -o -type f | grep $@
+        find . -type d -name (.svn|.git) -prune -o -type f | grep $@
     fi
 }
 
 fd() {
     if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn|.git' -prune -o -type d`
+        F=`find $1 -type d -name (.svn|.git) -prune -o -type d`
         shift 1
         echo $F | grep $@
     else
-        find . -type d -name '.svn|.git' -prune -o -type d | grep $@
+        find . -type d -name (.svn|.git) -prune -o -type d | grep $@
     fi
 }
 
 fs() {
     if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn|.git' -prune -o -type f`
+        F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
         shift 1
         grep $@ $F
     else
-        find . -type d -name '.svn|.git' -prune -o -type f | xargs grep $@
+        find . -type d -name (.svn|.git) -prune -o -type f | xargs grep $@
     fi
 }
 
