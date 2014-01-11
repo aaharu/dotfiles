@@ -36,12 +36,22 @@ set foldmethod=manual
 set list
 set listchars=tab:>\ ,extends:<,trail:-
 
+set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
+
+au BufRead,BufNewFile *.ts set filetype=typescript
+au BufRead,BufNewFile *.cc set filetype=cpp
+au BufRead,BufNewFile *.cpp set filetype=cpp
+
+autocmd FileType php setlocal omnifunc=csscomplete#CompletePHP
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-au BufRead,BufNewFile *.ts  set filetype=typescript
+autocmd FileType c,cc,cpp setlocal omnifunc=ccomplete#Complete
+
+set complete+=k
+set completeopt=menuone,preview
 
 noremap <c-a> <Home>
 inoremap <c-a> <Home>
@@ -57,6 +67,7 @@ noremap <c-p> <Up>
 inoremap <c-p> <Up>
 noremap <c-n> <Down>
 inoremap <c-n> <Down>
+imap <Nul> <c-x><c-k>
 
 if has('syntax') && &t_Co > 2
     if stridx($TERM, "256") >= 0
@@ -68,25 +79,29 @@ endif
 set background=dark
 colorscheme darkblue
 
-if has('vim_starting')
-    set nocompatible               " Be iMproved
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+if version >= 720
+    if has('vim_starting')
+        set nocompatible               " Be iMproved
+        set runtimepath+=~/.vim/bundle/neobundle.vim/
+    endif
+
+    call neobundle#rc(expand('~/.vim/bundle/'))
+
+    " Let NeoBundle manage NeoBundle
+    NeoBundleFetch 'Shougo/neobundle.vim'
+    NeoBundle 'Shougo/vimproc'
+    NeoBundle 'leafgarland/typescript-vim'
+    NeoBundle 'Shougo/neocomplcache.vim'
+    NeoBundle 'kchmck/vim-coffee-script'
+    NeoBundle 'altercation/vim-colors-solarized'
+    NeoBundle 'nanotech/jellybeans.vim'
+    NeoBundle 'tomasr/molokai'
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'ujihisa/unite-colorscheme'
 endif
-
-call neobundle#rc(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'leafgarland/typescript-vim'
-NeoBundle 'Shougo/neocomplcache.vim'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'ujihisa/unite-colorscheme'
 
 filetype indent plugin on
 
-NeoBundleCheck
+if version >= 720
+    NeoBundleCheck
+endif

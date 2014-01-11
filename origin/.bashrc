@@ -40,31 +40,31 @@ cvs() {
 
 ff() {
     if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn|.git' -prune -o -type f`
+        F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
         shift 1
         echo $F | grep $@
     else
-        find . -type d -name '.svn|.git' -prune -o -type f | grep $@
+        find . -type d -name (.svn|.git) -prune -o -type f | grep $@
     fi
 }
 
 fd() {
     if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn|.git' -prune -o -type d`
+        F=`find $1 -type d -name (.svn|.git) -prune -o -type d`
         shift 1
         echo $F | grep $@
     else
-        find . -type d -name '.svn|.git' -prune -o -type d | grep $@
+        find . -type d -name (.svn|.git) -prune -o -type d | grep $@
     fi
 }
 
 fs() {
     if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn|.git' -prune -o -type f`
+        F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
         shift 1
-        grep $@ $F
+        echo $F | xargs grep $@
     else
-        find . -type d -name '.svn|.git' -prune -o -type f | xargs grep $@
+        find . -type d -name (.svn|.git) -prune -o -type f | xargs grep $@
     fi
 }
 
