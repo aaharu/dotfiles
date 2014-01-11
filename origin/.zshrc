@@ -106,7 +106,7 @@ fs() {
     if [ -d $1 ] ; then
         F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
         shift 1
-        grep $@ $F
+        echo $F | xargs grep $@
     else
         find . -type d -name (.svn|.git) -prune -o -type f | xargs grep $@
     fi
