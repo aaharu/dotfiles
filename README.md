@@ -14,6 +14,10 @@ replace/
 configure files to replace base ones
 
 
+How to set up
+===================
+
 ```
-./setup.sh
+git clone git@github.com:aaharu/dotfiles.git --recursive
+dotfiles/setup.sh
 ```
