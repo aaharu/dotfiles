@@ -50,7 +50,7 @@ if is-at-least 4.3.10; then
         PROMPT="${vcs_info_msg_0_}% %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
     }
 else
-    PROMPT="$ "
+    PROMPT="%(?.$YELLOW.$RED)%(!.#.$) $DEFAULT "
 fi
 SHORTHOST=`hostname`
 RPROMPT="%(?..$RED%?) $DARK_GRAY%* $BLUE${USER}$DEFAULT@$GREEN$SHORTHOST$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
