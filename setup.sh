@@ -1,5 +1,6 @@
-#!/bin/sh -u
+#!/bin/sh -eu
 
+cd `dirname $0`
 [ ! -d ./build ] && mkdir build
 
 find ./origin -type d -name '.git' -prune -o -type f -o -type d | while read ORIGIN
@@ -77,7 +78,7 @@ do
     fi
     echo ""
     echo "[info] create ${FILE}"
-    ln -ins `pwd`/$BUILD $HOME/$FILE
+    ln -ins `pwd`${BUILD#.} $HOME/$FILE
     if [ -d $BUILD ] ; then
         SKIP=$FILE
     fi
