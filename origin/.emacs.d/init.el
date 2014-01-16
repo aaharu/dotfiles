@@ -23,6 +23,24 @@
 
 (keyboard-translate ?\C-h ?\C-?)
 
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+
+(require 'cl)
+(global-whitespace-mode 1)
+(require 'whitespace)
+(setq whitespace-style '(face
+                         trailing
+                         tabs
+                         empty
+                         space-mark
+                         tab-mark))
+(setq whitespace-display-mappings
+    '((space-mark ?\u3000 [?\u25a1])
+      (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
+(setq whitespace-space-regexp "\\(\u3000+\\)")
+
+
 (let ((default-directory "~/.emacs.d/site-lisp"))
     (setq loat-path (cons default-directory load-path))
     (normal-top-level-add-subdirs-to-load-path))
@@ -50,3 +68,5 @@
 (add-to-list 'anything-sources 'anything-c-source-emacs-commands)
 
 (require 'flymake)
+
+(require 'php-mode)
