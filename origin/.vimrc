@@ -42,7 +42,7 @@ au BufRead,BufNewFile *.ts set filetype=typescript
 au BufRead,BufNewFile *.cc set filetype=cpp
 au BufRead,BufNewFile *.cpp set filetype=cpp
 
-autocmd FileType php setlocal omnifunc=csscomplete#CompletePHP
+autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
@@ -79,7 +79,7 @@ endif
 set background=dark
 colorscheme darkblue
 
-if version >= 720
+if v:version >= 702
     if has('vim_starting')
         set nocompatible               " Be iMproved
         set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -102,6 +102,6 @@ endif
 
 filetype indent plugin on
 
-if version >= 720
+if v:version >= 702
     NeoBundleCheck
 endif

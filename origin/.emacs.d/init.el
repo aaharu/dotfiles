@@ -45,3 +45,8 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 (load-theme 'solarized-dark t)
+
+(require 'anything)
+(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
+
+(require 'flymake)
