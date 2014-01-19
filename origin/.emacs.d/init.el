@@ -26,7 +26,6 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-(require 'cl)
 (global-whitespace-mode 1)
 (require 'whitespace)
 (setq whitespace-style '(face
@@ -64,9 +63,16 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 (load-theme 'solarized-dark t)
 
+(auto-install-batch "anything")
 (require 'anything)
 (add-to-list 'anything-sources 'anything-c-source-emacs-commands)
 
 (require 'flymake)
 
+(auto-install-from-url "http://svn.code.sf.net/p/php-mode/code/tags/php-mode-1.5.0/php-mode.el")
 (require 'php-mode)
+
+(auto-install-from-url "https://raw.github.com/auto-complete/popup-el/master/popup.el")
+;; auto-complete
+(require 'auto-complete-config)
+(ac-config-default)
