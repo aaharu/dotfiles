@@ -7,6 +7,7 @@
 (setq-default indent-tabs-mode nil)
 (setq indent-line-function 'indent-relative-mybe)
 
+(menu-bar-mode 0)
 ;; paren mode
 (show-paren-mode t)
 ;; Limit the final word to a line break code (automatically correct)
@@ -50,7 +51,6 @@
 (auto-install-compatibility-setup)
 (setq auto-install-save-confirm nil)
 
-(line-number-mode t)
 (column-number-mode t)
 (which-function-mode t)
 
@@ -60,19 +60,32 @@
 (setq undo-limit 100000)
 (setq undo-strong-limit 100000)
 
+;; line numbers
+(require 'linum)
+(global-linum-mode t)
+(setq linum-format "%4d: ")
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 (load-theme 'solarized-dark t)
 
-(auto-install-batch "anything")
-(require 'anything)
-(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
+;; anything
+;; emacs --batch -Q -L ~/.emacs.d/site-lisp/auto-install --eval "(require 'auto-install)(setq auto-install-directory \"~/.emacs.d/site-lisp/auto-install/\")(auto-install-batch \"anything\")"
+(when (require 'anyting nil t)
+    (add-to-list 'anything-sources 'anything-c-source-emacs-commands))
 
-(require 'flymake)
+(when (require 'flymake nil t))
 
-(auto-install-from-url "http://svn.code.sf.net/p/php-mode/code/tags/php-mode-1.5.0/php-mode.el")
-(require 'php-mode)
+;; php-mode
+;; emacs --batch -Q -L ~/.emacs.d/site-lisp/auto-install --eval "(require 'auto-install)(setq auto-install-directory \"~/.emacs.d/site-lisp/auto-install/\")(auto-install-from-url \"http://svn.code.sf.net/p/php-mode/code/tags/php-mode-1.5.0/php-mode.el\")"
+(when (require 'php-mode nil t))
 
-(auto-install-from-url "https://raw.github.com/auto-complete/popup-el/master/popup.el")
 ;; auto-complete
-(require 'auto-complete-config)
-(ac-config-default)
+;; emacs --batch -Q -L ~/.emacs.d/site-lisp/auto-install --eval "(require 'auto-install)(setq auto-install-directory \"~/.emacs.d/site-lisp/auto-install/\")(auto-install-batch \"auto-complete development version\")"
+(when (require 'auto-complete-config)
+    (ac-config-default)
+    (define-key ac-completing-map (kbd "M-n") 'ac-next)
+    (define-key ac-completing-map (kbd "M-p") 'ac-previous)
+    (setq ac-auto-start nil)
+    (ac-set-trigger-key "TAB")
+    (setq ac-dwim t)
+)

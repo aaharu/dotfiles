@@ -49,7 +49,7 @@ if is-at-least 4.3.10; then
         PROMPT="${vcs_info_msg_0_}% %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
     }
 else
-    PROMPT="%(?.$YELLOW.$RED)%(!.#.$) $DEFAULT "
+    PROMPT="%(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
 fi
 SHORTHOST=`hostname`
 RPROMPT="%(?..$RED%?) $DARK_GRAY%* $BLUE${USER}$DEFAULT@$GREEN$SHORTHOST$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
@@ -85,9 +85,9 @@ ff() {
     if [ -d $1 ] ; then
         F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
         shift 1
-        echo $F | grep --color=auto $@
+        echo $F | grep $@
     else
-        find . -type d -name (.svn|.git) -prune -o -type f | grep --color=auto $@
+        find . -type d -name (.svn|.git) -prune -o -type f | grep $@
     fi
 }
 
@@ -95,9 +95,9 @@ fd() {
     if [ -d $1 ] ; then
         F=`find $1 -type d -name (.svn|.git) -prune -o -type d`
         shift 1
-        echo $F | grep --color=auto $@
+        echo $F | grep $@
     else
-        find . -type d -name (.svn|.git) -prune -o -type d | grep --color=auto $@
+        find . -type d -name (.svn|.git) -prune -o -type d | grep $@
     fi
 }
 
@@ -105,9 +105,9 @@ fs() {
     if [ -d $1 ] ; then
         F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
         shift 1
-        echo $F | xargs grep --color=auto $@
+        echo $F | xargs grep $@
     else
-        find . -type d -name (.svn|.git) -prune -o -type f | xargs grep --color=auto $@
+        find . -type d -name (.svn|.git) -prune -o -type f | xargs grep $@
     fi
 }
 
