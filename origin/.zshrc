@@ -20,18 +20,24 @@ alias em='emacs -nw'
 alias sc='screen'
 alias svi='sudo vim'
 
+alias -g L='| less'
+alias -g M='| more'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+
 export PATH="$HOME/bin:$PATH"
 
 bindkey -e
 autoload -U compinit
 compinit -u
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z} r:|[-_.]=**'
 autoload -U colors
 colors
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
 export ZLS_COLORS=$LS_COLORS
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:default' menu select=1
+zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
 local          RED=$'%{\e[0;31m%}'
 local        GREEN=$'%{\e[0;32m%}'
 local         BLUE=$'%{\e[0;34m%}'
@@ -70,6 +76,7 @@ setopt correct
 setopt append_history
 unsetopt ignore_eof
 setopt hist_ignore_dups
+setopt globdots
 
 bindkey "^[[Z" reverse-menu-complete
 

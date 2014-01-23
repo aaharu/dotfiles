@@ -81,7 +81,7 @@
 
 ;; auto-complete
 ;; emacs --batch -Q -L ~/.emacs.d/site-lisp/auto-install --eval "(require 'auto-install)(setq auto-install-directory \"~/.emacs.d/site-lisp/auto-install/\")(auto-install-batch \"auto-complete development version\")"
-(when (require 'auto-complete-config)
+(when (require 'auto-complete-config nil t)
     (ac-config-default)
     (define-key ac-completing-map (kbd "M-n") 'ac-next)
     (define-key ac-completing-map (kbd "M-p") 'ac-previous)
