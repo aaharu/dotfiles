@@ -15,7 +15,6 @@ set showmatch
 set showmode
 set showcmd
 set laststatus=2
-set cursorline
 set number
 set ruler
 set hidden
@@ -89,15 +88,15 @@ if v:version >= 702
 
     " Let NeoBundle manage NeoBundle
     NeoBundleFetch 'Shougo/neobundle.vim'
-    NeoBundle 'Shougo/vimproc'
-    NeoBundle 'leafgarland/typescript-vim'
+    "NeoBundle 'Shougo/vimproc'
+    "NeoBundle 'leafgarland/typescript-vim'
     NeoBundle 'Shougo/neocomplcache.vim'
-    NeoBundle 'kchmck/vim-coffee-script'
-    NeoBundle 'altercation/vim-colors-solarized'
-    NeoBundle 'nanotech/jellybeans.vim'
-    NeoBundle 'tomasr/molokai'
-    NeoBundle 'Shougo/unite.vim'
-    NeoBundle 'ujihisa/unite-colorscheme'
+    "NeoBundle 'kchmck/vim-coffee-script'
+    "NeoBundle 'altercation/vim-colors-solarized'
+    "NeoBundle 'nanotech/jellybeans.vim'
+    "NeoBundle 'tomasr/molokai'
+    "NeoBundle 'Shougo/unite.vim'
+    "NeoBundle 'ujihisa/unite-colorscheme'
 endif
 
 filetype indent plugin on
