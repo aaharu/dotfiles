@@ -1,13 +1,13 @@
-#!/bin/sh -eu
+#!/bin/bash -eu
 
 cd `dirname $0`
 [ ! -d ./build ] && mkdir build
 
-find ./origin -type d -name '.git' -prune -o -type f -o -type d | while read ORIGIN
+find ./origin -type d -name '.git' -prune -o \( -type f -o -type d \) -mindepth 1 | while read ORIGIN
 do
     FILE=${ORIGIN#./origin/}
     case $FILE in
-        "./origin"|*/\.git) continue ;;
+        */\.git) continue ;;
     esac
     if [ -d $ORIGIN ] ; then
         mkdir -p "build/${FILE}"
@@ -29,13 +29,12 @@ do
     cp $ORIGIN "build/${FILE}"
 done
 
-find ./replace -type d -name '.git' -prune -o -type f -o -type d | while read REPLACE
+find ./replace -type d -name '.git' -prune -o \( -type f -o -type d \) -mindepth 1 | while read REPLACE
 do
     FILE=${REPLACE#./replace/}
     case $FILE in
-        "./replace"|".gitkeep"|*/\.git) continue ;;
+        ".gitkeep"|*/\.git) continue ;;
     esac
-    [ -e "build/${FILE}" ] && continue
     if [ -d $REPLACE ] ; then
         mkdir -p "build/${FILE}"
         continue
@@ -43,13 +42,12 @@ do
     cp $REPLACE "build/${FILE}"
 done
 
-find ./catenate -type d -name '.git' -prune -o -type f -o -type d | while read CATENATE
+find ./catenate -type d -name '.git' -prune -o \( -type f -o -type d \) -mindepth 1 | while read CATENATE
 do
     FILE=${CATENATE#./catenate/}
     case $FILE in
-        "./catenate"|".gitkeep"|*/\.git) continue ;;
+        ".gitkeep"|*/\.git) continue ;;
     esac
-    [ -e "build/${FILE}" ] && continue
     if [ -d $CATENATE ] ; then
         mkdir -p "build/${FILE}"
         continue
@@ -58,11 +56,11 @@ do
 done
 
 SKIP=""
-for BUILD in $(find ./build -type d -name '.git' -prune -o -type f -o -type d)
+for BUILD in $(find ./build -type d -name '.git' -prune -o \( -type f -o -type d \) -mindepth 1)
 do
     FILE=${BUILD#./build/}
     case $FILE in
-        "./build"|*/\.git) continue ;;
+        */\.git) continue ;;
     esac
     [ ! "${SKIP}" = "" ] && case $FILE in
         ${SKIP}/*) continue ;;
