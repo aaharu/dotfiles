@@ -80,7 +80,7 @@ if has('syntax') && &t_Co > 2
     syntax enable
 endif
 
-if v:version >= 740
+if v:version >= 704
     if &compatible
         set nocompatible
     endif
@@ -100,16 +100,18 @@ if v:version >= 740
     call dein#add('editorconfig/editorconfig-vim')
 
     call dein#end()
-elseif v:version >= 702
-    if has('vim_starting')
-        set nocompatible               " Be iMproved
-        set runtimepath+=~/.vim/bundle/neobundle.vim/
-    endif
 
-    call neobundle#rc(expand('~/.vim/bundle/'))
+    filetype indent plugin on
+elseif v:version >= 702
+    if &compatible
+        set nocompatible
+    endif
+    set runtimepath^=~/.vim/bundle/neobundle.vim/
+
+    call neobundle#begin(expand('~/.vim/bundle/'))
 
     NeoBundleFetch 'Shougo/neobundle.vim'
-    if has('lua') && v:version >= 739
+    if has('lua') && v:version >= 703
         NeoBundle 'Shougo/neocomplete.vim'
     else
         NeoBundle 'Shougo/neocomplcache.vim'
@@ -121,11 +123,13 @@ elseif v:version >= 702
     NeoBundle 'ujihisa/unite-colorscheme'
     NeoBundle 'editorconfig/editorconfig-vim'
 
+    call neobundle#end()
+
+    filetype indent plugin on
+
     NeoBundleCheck
 endif
 
 set background=dark
-"colorscheme darkblue
-colorscheme koehler
-
-filetype indent plugin on
+colorscheme darkblue
+"colorscheme koehler
