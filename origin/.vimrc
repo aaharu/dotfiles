@@ -89,14 +89,24 @@ if v:version >= 704
     call dein#begin(expand('~/.vim/dein/'))
 
     call dein#add('Shougo/dein.vim')
+    call dein#add('Shougo/vimproc.vim', {
+                \ 'build': {
+                \     'windows': 'tools\\update-dll-mingw',
+                \     'cygwin': 'make -f make_cygwin.mak',
+                \     'mac': 'make -f make_mac.mak',
+                \     'linux': 'make',
+                \     'unix': 'gmake'}})
+    call dein#add('Shougo/unite.vim', {
+                \ 'depends': ['vimproc.vim'],
+                \ 'on_cmd': ['Unite'],
+                \ 'lazy': 1})
+    call dein#add('ujihisa/unite-colorscheme', {'depends': ['unite.vim']})
     if has('lua')
         call dein#add('Shougo/neocomplete.vim')
     else
         call dein#add('Shougo/neocomplcache.vim')
     endif
     call dein#add('kchmck/vim-coffee-script')
-    call dein#add('Shougo/unite.vim')
-    call dein#add('ujihisa/unite-colorscheme')
     call dein#add('editorconfig/editorconfig-vim')
 
     call dein#end()
