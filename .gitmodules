@@ -1,6 +1,6 @@
 [submodule "origin/.vim/bundle/neobundle.vim"]
 	path = origin/.vim/bundle/neobundle.vim
 	url = git://github.com/Shougo/neobundle.vim
-[submodule "origin/.emacs.d/themes/emacs-color-theme-solarized"]
-	path = origin/.emacs.d/themes/emacs-color-theme-solarized
-	url = git://github.com/sellout/emacs-color-theme-solarized.git
+[submodule "origin/.vim/dein/repos/github.com/Shougo/dein.vim"]
+	path = origin/.vim/dein/repos/github.com/Shougo/dein.vim
+	url = git://github.com/Shougo/dein.vim
