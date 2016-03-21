@@ -86,9 +86,9 @@ if v:version >= 704
     endif
     set runtimepath^=~/.vim/dein/repos/github.com/Shougo/dein.vim/
 
-    call dein#begin(expand('~/.cache/dein'))
+    call dein#begin(expand('~/.vim/dein/'))
 
-    call dein#add('~/.vim/dein/repos/github.com/Shougo/dein.vim/')
+    call dein#add('Shougo/dein.vim')
     if has('lua')
         call dein#add('Shougo/neocomplete.vim')
     else
@@ -115,9 +115,6 @@ elseif v:version >= 702
         NeoBundle 'Shougo/neocomplete.vim'
     else
         NeoBundle 'Shougo/neocomplcache.vim'
-    endif
-    if v:version >= 740
-        NeoBundle 'kchmck/vim-coffee-script'
     endif
     NeoBundle 'Shougo/unite.vim'
     NeoBundle 'ujihisa/unite-colorscheme'
