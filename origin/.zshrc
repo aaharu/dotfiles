@@ -52,10 +52,10 @@ if is-at-least 4.3.10; then
     zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}[%s %b] %{'$reset_color'%}'
     precmd () {
         LANG=en_US.UTF-8 vcs_info
-        PROMPT="${vcs_info_msg_0_}% %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
+        PROMPT="${vcs_info_msg_0_}% $GREEN%B%(?.(´･_･%).($(echo '\`')･_･%))%b$DEFAULT  %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
     }
 else
-    PROMPT="%(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
+    PROMPT="$GREEN%B%(?.(´･_･%).($(echo '\`')･_･%))%b$DEFAULT %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
 fi
 SHORTHOST=`hostname`
 RPROMPT="%(?..$RED%?) $DARK_GRAY%* $BLUE${USER}$DEFAULT@$GREEN$SHORTHOST$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
