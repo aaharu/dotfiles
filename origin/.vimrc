@@ -68,6 +68,10 @@ noremap <c-n> <Down>
 inoremap <c-n> <Down>
 imap <Nul> <c-x><c-k>
 
+if has('cscope')
+    cs add cscope.out
+endif
+
 if has('syntax') && &t_Co > 2
     if stridx($TERM, "256") >= 0
         set t_Co=256
@@ -75,10 +79,28 @@ if has('syntax') && &t_Co > 2
 
     syntax enable
 endif
-set background=dark
-colorscheme darkblue
 
-if v:version >= 702
+if v:version >= 740
+    if &compatible
+        set nocompatible
+    endif
+    set runtimepath^=~/.vim/dein/repos/github.com/Shougo/dein.vim/
+
+    call dein#begin(expand('~/.cache/dein'))
+
+    call dein#add('~/.vim/dein/repos/github.com/Shougo/dein.vim/')
+    if has('lua')
+        call dein#add('Shougo/neocomplete.vim')
+    else
+        call dein#add('Shougo/neocomplcache.vim')
+    endif
+    call dein#add('kchmck/vim-coffee-script')
+    call dein#add('Shougo/unite.vim')
+    call dein#add('ujihisa/unite-colorscheme')
+    call dein#add('editorconfig/editorconfig-vim')
+
+    call dein#end()
+elseif v:version >= 702
     if has('vim_starting')
         set nocompatible               " Be iMproved
         set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -86,21 +108,24 @@ if v:version >= 702
 
     call neobundle#rc(expand('~/.vim/bundle/'))
 
-    " Let NeoBundle manage NeoBundle
     NeoBundleFetch 'Shougo/neobundle.vim'
-    "NeoBundle 'Shougo/vimproc'
-    "NeoBundle 'leafgarland/typescript-vim'
-    NeoBundle 'Shougo/neocomplcache.vim'
-    "NeoBundle 'kchmck/vim-coffee-script'
-    "NeoBundle 'altercation/vim-colors-solarized'
-    "NeoBundle 'nanotech/jellybeans.vim'
-    "NeoBundle 'tomasr/molokai'
-    "NeoBundle 'Shougo/unite.vim'
-    "NeoBundle 'ujihisa/unite-colorscheme'
-endif
+    if has('lua') && v:version >= 739
+        NeoBundle 'Shougo/neocomplete.vim'
+    else
+        NeoBundle 'Shougo/neocomplcache.vim'
+    endif
+    if v:version >= 740
+        NeoBundle 'kchmck/vim-coffee-script'
+    endif
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'ujihisa/unite-colorscheme'
+    NeoBundle 'editorconfig/editorconfig-vim'
 
-filetype indent plugin on
-
-if v:version >= 702
     NeoBundleCheck
 endif
+
+set background=dark
+"colorscheme darkblue
+colorscheme koehler
+
+filetype indent plugin on
