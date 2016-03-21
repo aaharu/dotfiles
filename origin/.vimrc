@@ -102,6 +102,10 @@ if v:version >= 704
     call dein#end()
 
     filetype indent plugin on
+
+    if dein#check_install()
+        call dein#install()
+    endif
 elseif v:version >= 702
     if &compatible
         set nocompatible
