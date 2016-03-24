@@ -4,7 +4,7 @@ set expandtab
 "set noexpandtab
 
 set encoding=utf-8
-set fileencoding=utf-8
+set fileencodings=utf-8,euc-jp,sjis
 set fileformats=unix
 set backspace=2
 
@@ -31,7 +31,6 @@ set ignorecase
 set smartcase
 set hlsearch
 
-set foldmethod=manual
 set list
 set listchars=tab:>\ ,extends:<,trail:-
 
@@ -69,7 +68,11 @@ inoremap <c-n> <Down>
 imap <Nul> <c-x><c-k>
 
 if has('cscope')
-    cs add cscope.out
+    set nocsverb
+    if filereadable('cscope.out')
+        cs add cscope.out
+    endif
+    set csverb
 endif
 
 if has('syntax') && &t_Co > 2
@@ -125,13 +128,7 @@ elseif v:version >= 702
     call neobundle#begin(expand('~/.vim/bundle/'))
 
     NeoBundleFetch 'Shougo/neobundle.vim'
-    if has('lua') && v:version >= 703
-        NeoBundle 'Shougo/neocomplete.vim'
-    else
-        NeoBundle 'Shougo/neocomplcache.vim'
-    endif
-    NeoBundle 'Shougo/unite.vim'
-    NeoBundle 'ujihisa/unite-colorscheme'
+    NeoBundle 'Shougo/neocomplcache.vim'
     NeoBundle 'editorconfig/editorconfig-vim'
 
     call neobundle#end()
