@@ -101,7 +101,7 @@ if v:version >= 704
                 \     'unix': 'gmake'}})
     call dein#add('Shougo/unite.vim', {
                 \ 'depends': ['vimproc.vim'],
-                \ 'on_cmd': ['Unite'],
+                \ 'on_cmd': ['unite'],
                 \ 'lazy': 1})
     call dein#add('ujihisa/unite-colorscheme', {'depends': ['unite.vim']})
     if has('lua')
