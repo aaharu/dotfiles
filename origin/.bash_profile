@@ -1,5 +1,6 @@
-if [ -e `which zsh` ] ; then
-    exec zsh -l
+if [ -z "${BASH_EXECUTION_STRING}" ] ; then
+    ZSH=$(which zsh)
+    [ -x "${ZSH}" ] && SHELL="${ZSH}" exec "${ZSH}" -l
 else
     . ~/.bashrc
 fi

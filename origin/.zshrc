@@ -2,7 +2,7 @@
 
 [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
 
-if [ `uname` = "Linux" ] ; then
+if [ "$(uname)" = "Linux" ] ; then
     alias ls='ls -F --color'
     alias la='ls -ahF --color'
     alias ll='ls -lhF --color'
@@ -38,13 +38,15 @@ export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30
 export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
-local          RED=$'%{\e[0;31m%}'
-local        GREEN=$'%{\e[0;32m%}'
-local         BLUE=$'%{\e[0;34m%}'
-local    DARK_GRAY=$'%{\e[1;30m%}'
-local       YELLOW=$'%{\e[1;33m%}'
-local LIGHT_PURPLE=$'%{\e[1;35m%}'
-local      DEFAULT=$'%{\e[1;m%}'
+
+RED=$'%{\e[0;31m%}'
+GREEN=$'%{\e[0;32m%}'
+BLUE=$'%{\e[0;34m%}'
+DARK_GRAY=$'%{\e[1;30m%}'
+YELLOW=$'%{\e[1;33m%}'
+LIGHT_PURPLE=$'%{\e[1;35m%}'
+DEFAULT=$'%{\e[1;m%}'
+
 autoload -Uz is-at-least
 if is-at-least 4.3.10; then
     autoload -Uz vcs_info
@@ -57,7 +59,7 @@ if is-at-least 4.3.10; then
 else
     PROMPT="%(?.$GREEN%B(´･_･%)%b.$RED%B($(echo '\`')･_･%)%b)$DEFAULT %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
 fi
-SHORTHOST=`hostname`
+SHORTHOST=$(hostname)
 RPROMPT="%(?..$RED%?) $DARK_GRAY%* $BLUE${USER}$DEFAULT@$GREEN$SHORTHOST$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
 
 setopt no_beep
@@ -81,40 +83,40 @@ setopt globdots
 bindkey "^[[Z" reverse-menu-complete
 
 cvs() {
-    if [ $1 = "cat" ] ; then
-        command cvs update -p $2
+    if [ "$1" = "cat" ] ; then
+        command cvs update -p "$2"
     else
-        command cvs $@
+        command cvs "$@"
     fi
 }
 
 ff() {
-    if [ -d $1 ] ; then
-        F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
+    if [ -d "$1" ] ; then
+        F=$(find "$1" -type d \( -name ".svn" -o -name ".git" \) -prune -o -type f)
         shift 1
-        echo $F | grep $@
+        echo "$F" | grep "$@"
     else
-        find . -type d -name (.svn|.git) -prune -o -type f | grep $@
+        find . -type d \( -name ".svn" -o -name ".git" \) -prune -o -type f -print | grep "$@"
     fi
 }
 
 fd() {
-    if [ -d $1 ] ; then
-        F=`find $1 -type d -name (.svn|.git) -prune -o -type d`
+    if [ -d "$1" ] ; then
+        F=$(find "$1" -type d \( -name ".svn" -o -name ".git" \) -prune -o -type d)
         shift 1
-        echo $F | grep $@
+        echo "$F" | grep "$@"
     else
-        find . -type d -name (.svn|.git) -prune -o -type d | grep $@
+        find . -type d \( -name ".svn" -o -name ".git" \) -prune -o -type d -print | grep "$@"
     fi
 }
 
 fs() {
-    if [ -d $1 ] ; then
-        F=`find $1 -type d -name (.svn|.git) -prune -o -type f`
+    if [ -d "$1" ] ; then
+        F=$(find "$1" -type d \( -name ".svn" -o -name ".git" \) -prune -o -type f)
         shift 1
-        echo $F | xargs grep $@
+        echo "$F" | xargs grep "$@"
     else
-        find . -type d -name (.svn|.git) -prune -o -type f | xargs grep $@
+        find . -type d \( -name ".svn" -o -name ".git" \) -prune -o -type f -print0 | xargs -0 grep "$@"
     fi
 }
 

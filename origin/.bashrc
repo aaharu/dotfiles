@@ -2,7 +2,7 @@
 
 [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
 
-if [ `uname` = "Linux" ] ; then
+if [ "$(uname)" = "Linux" ] ; then
     alias ls='ls -F --color'
     alias la='ls -ahF --color'
     alias ll='ls -lhF --color'
@@ -31,7 +31,7 @@ fi
 export PATH="$HOME/bin:$PATH"
 
 cvs() {
-    if [ $1 = "cat" ] ; then
+    if [ "$1" = "cat" ] ; then
         command cvs update -p $2
     else
         command cvs $@
@@ -39,32 +39,32 @@ cvs() {
 }
 
 ff() {
-    if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f`
+    if [ -d "$1" ] ; then
+        F=$(find $1 -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f)
         shift 1
-        echo $F | grep $@
+        echo "$F" | grep "$@"
     else
-        find . -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f | grep $@
+        find . -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f -print | grep "$@"
     fi
 }
 
 fd() {
-    if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type d`
+    if [ -d "$1" ] ; then
+        F=$(find $1 -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type d)
         shift 1
-        echo $F | grep $@
+        echo "$F" | grep "$@"
     else
-        find . -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type d | grep $@
+        find . -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type d -print | grep "$@"
     fi
 }
 
 fs() {
-    if [ -d $1 ] ; then
-        F=`find $1 -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f`
+    if [ -d "$1" ] ; then
+        F=$(find $1 -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f)
         shift 1
-        echo $F | xargs grep $@
+        echo "$F" | xargs grep "$@"
     else
-        find . -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f | xargs grep $@
+        find . -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f -print0 | xargs -0 grep "$@"
     fi
 }
 
