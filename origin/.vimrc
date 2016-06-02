@@ -102,6 +102,8 @@ if v:version >= 704
     endif
     call dein#add('kchmck/vim-coffee-script')
     call dein#add('editorconfig/editorconfig-vim')
+    call dein#add('tpope/vim-fugitive')
+    call dein#add('tfnico/vim-gradle')
 
     call dein#end()
 
