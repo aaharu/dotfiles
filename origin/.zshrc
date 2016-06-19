@@ -26,7 +26,7 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:/usr/local/sbin:$PATH"
 
 bindkey -e
 autoload -U compinit
