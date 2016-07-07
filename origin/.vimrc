@@ -93,14 +93,13 @@ if v:version >= 704
 
     call dein#add('Shougo/dein.vim')
     call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-    call dein#add('Shougo/unite.vim', {'build' : 'make', 'depends' : ['vimproc.vim'], 'on_cmd' : ['unite']})
+    call dein#add('Shougo/unite.vim', {'build' : 'make', 'depends' : ['vimproc.vim']})
     call dein#add('ujihisa/unite-colorscheme', {'depends' : ['unite.vim']})
     if has('lua')
         call dein#add('Shougo/neocomplete.vim')
     else
         call dein#add('Shougo/neocomplcache.vim')
     endif
-    call dein#add('kchmck/vim-coffee-script')
     call dein#add('editorconfig/editorconfig-vim')
     call dein#add('tpope/vim-fugitive')
     call dein#add('tfnico/vim-gradle')
@@ -111,6 +110,14 @@ if v:version >= 704
 
     if dein#check_install()
         call dein#install()
+    endif
+
+    nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+    if executable('pt')
+        let g:unite_source_grep_command = 'pt'
+        let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+        let g:unite_source_grep_recursive_opt = ''
+        let g:unite_source_grep_encoding = 'utf-8'
     endif
 elseif v:version >= 702
     if &compatible
