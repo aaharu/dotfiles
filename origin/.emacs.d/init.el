@@ -65,9 +65,6 @@
 (global-linum-mode t)
 (setq linum-format "%4d: ")
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
-(load-theme 'solarized-dark t)
-
 ;; anything
 ;; emacs --batch -Q -L ~/.emacs.d/site-lisp/auto-install --eval "(require 'auto-install)(setq auto-install-directory \"~/.emacs.d/site-lisp/auto-install/\")(auto-install-batch \"anything\")"
 (when (require 'anyting nil t)
