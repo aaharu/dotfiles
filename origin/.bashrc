@@ -28,7 +28,8 @@ else
     export PS1='[\h \W]$ '
 fi
 
-export PATH="$HOME/bin:$PATH"
+export GOPATH="$HOME/.go"
+export PATH="$HOME/bin:$PATH:$GOPATH/bin"
 
 cvs() {
     if [ "$1" = "cat" ] ; then

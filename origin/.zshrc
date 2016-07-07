@@ -21,12 +21,14 @@ alias sc='screen'
 alias svi='sudo vim'
 
 alias -g L='| less'
-alias -g M='| more'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
+alias -g P='| peco --select-1'
+alias -g F='| fpp'
 
-export PATH="$HOME/bin:$PATH"
+export GOPATH="$HOME/.go"
+export PATH="$HOME/bin:$PATH:$GOPATH/bin"
 
 bindkey -e
 autoload -U compinit
@@ -82,7 +84,7 @@ setopt globdots
 
 bindkey "^[[Z" reverse-menu-complete
 
-cvs() {
+function cvs() {
     if [ "$1" = "cat" ] ; then
         command cvs update -p "$2"
     else
@@ -90,7 +92,7 @@ cvs() {
     fi
 }
 
-ff() {
+function ff() {
     if [ -d "$1" ] ; then
         F=$(find "$1" -type d \( -name ".svn" -o -name ".git" \) -prune -o -type f)
         shift 1
@@ -100,7 +102,7 @@ ff() {
     fi
 }
 
-fd() {
+function fd() {
     if [ -d "$1" ] ; then
         F=$(find "$1" -type d \( -name ".svn" -o -name ".git" \) -prune -o -type d)
         shift 1
@@ -110,7 +112,7 @@ fd() {
     fi
 }
 
-fs() {
+function fs() {
     if [ -d "$1" ] ; then
         F=$(find "$1" -type d \( -name ".svn" -o -name ".git" \) -prune -o -type f)
         shift 1
@@ -120,6 +122,30 @@ fs() {
     fi
 }
 
+if [ -x "$(which peco)"] ; then
+    function peco-select-history() {
+        local tac
+        if which tac > /dev/null; then
+            tac="tac"
+        else
+            tac="tail -r"
+        fi
+        BUFFER=$(history -n 1 | eval $tac | peco --query "$LBUFFER")
+        CURSOR=$#BUFFER
+        zle clear-screen
+    }
+    zle -N peco-select-history
+    bindkey '^r' peco-select-history
+
+    function p() {
+        peco --select-1 | while read LINE; do "$@" "$LINE"; done
+    }
+
+    function ptvi() {
+        vim $(pt "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
+    }
+fi
+
 HISTFILE=~/.zsh_history
-HISTSIZE=9999
-SAVEHIST=9999
+HISTSIZE=99999
+SAVEHIST=99999
