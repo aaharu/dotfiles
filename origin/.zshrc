@@ -122,7 +122,7 @@ function fs() {
     fi
 }
 
-if [ -x "$(which peco)"] ; then
+if [ -x "$(which peco)" ] ; then
     function peco-select-history() {
         local tac
         if which tac > /dev/null; then
