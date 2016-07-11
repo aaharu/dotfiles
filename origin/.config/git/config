@@ -6,3 +6,5 @@
 	br = branch
 	ci = commit
 	di = diff
+[core]
+	editor = vim
