@@ -1,5 +1,6 @@
 {
+    "Layout": "bottom-up",
     "Style": {
-        "Selected": ["on_green", "black"]
+        "Selected": ["on_cyan", "black"]
     }
 }

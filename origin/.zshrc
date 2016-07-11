@@ -24,10 +24,8 @@ alias -g L='| less'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
-alias -g P='| peco --select-1'
-alias -g F='| fpp'
 
-export GOPATH="$HOME/.go"
+export GOPATH="$HOME"
 export PATH="$HOME/bin:$PATH:$GOPATH/bin"
 
 bindkey -e
@@ -123,6 +121,9 @@ function fs() {
 }
 
 if [ -x "$(which peco)" ] ; then
+    alias -g P='| peco --select-1'
+    alias cdg='cd $(ghq list -p | peco)'
+
     function peco-select-history() {
         local tac
         if which tac > /dev/null; then
