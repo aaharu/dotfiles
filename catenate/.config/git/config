@@ -3,3 +3,5 @@
 	email = aaharu@hotmail.com
 [github]
 	user = aaharu
+[ghq]
+	root = /Users/haru/src
