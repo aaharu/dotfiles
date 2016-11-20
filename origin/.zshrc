@@ -1,7 +1,5 @@
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 
-[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
-
 if [ "$(uname)" = "Linux" ] ; then
     alias ls='ls -F --color'
     alias la='ls -ahF --color'
@@ -26,6 +24,8 @@ alias -g T='| tail'
 alias -g G='| grep'
 
 export GOPATH="$HOME"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.nodebrew/current/bin:$PATH"
 export PATH="$HOME/bin:$PATH:$GOPATH/bin"
 
 bindkey -e
