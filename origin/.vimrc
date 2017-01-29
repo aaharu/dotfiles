@@ -36,6 +36,11 @@ set listchars=tab:>\ ,extends:<,trail:-
 
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
 
+let g:netrw_liststyle=3
+let g:netrw_list_hide='CVS,\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_altv=1
+let g:netrw_alto=1
+
 au BufRead,BufNewFile *.ts set filetype=typescript
 au BufRead,BufNewFile *.cc set filetype=cpp
 au BufRead,BufNewFile *.cpp set filetype=cpp
@@ -103,6 +108,7 @@ if v:version >= 704
     call dein#add('editorconfig/editorconfig-vim')
     call dein#add('tpope/vim-fugitive')
     call dein#add('tfnico/vim-gradle')
+    call dein#add('scrooloose/nerdtree')
 
     call dein#end()
 
@@ -113,6 +119,7 @@ if v:version >= 704
     endif
 
     nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+    nnoremap <silent><C-t> :NERDTreeToggle<CR>
     if executable('pt')
         let g:unite_source_grep_command = 'pt'
         let g:unite_source_grep_default_opts = '--nogroup --nocolor'

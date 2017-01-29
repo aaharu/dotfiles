@@ -120,7 +120,15 @@ function fs() {
     fi
 }
 
-if [ -x "$(which peco)" ] ; then
+if [ -x "$(which fzf)" ] ; then
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    alias -g F='| fzf --ansi --select-1'
+    alias cdg='cd $(ghq list -p | fzf --ansi --exit-0)'
+
+    function ptvi() {
+        vim $(pt "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
+    }
+elif [ -x "$(which peco)" ] ; then
     alias -g P='| peco --select-1'
     alias cdg='cd $(ghq list -p | peco)'
 
@@ -137,10 +145,6 @@ if [ -x "$(which peco)" ] ; then
     }
     zle -N peco-select-history
     bindkey '^r' peco-select-history
-
-    function p() {
-        peco --select-1 | while read LINE; do "$@" "$LINE"; done
-    }
 
     function ptvi() {
         vim $(pt "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
