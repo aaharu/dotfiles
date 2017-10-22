@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit
 [ ! -d ./build ] && mkdir build
 
 find ./origin -mindepth 1 \( -type d -name '.git' -prune -o \( -type f -o -type d \) \) | while read -r ORIGIN

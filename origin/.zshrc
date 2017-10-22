@@ -1,5 +1,3 @@
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
-
 if [ "$(uname)" = "Linux" ] ; then
     alias ls='ls -F --color'
     alias la='ls -ahF --color'
@@ -128,6 +126,9 @@ if [ -x "$(which fzf)" ] ; then
     function ptvi() {
         vim $(pt "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
     }
+    function rgvi() {
+        vim $(rg "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
+    }
 elif [ -x "$(which peco)" ] ; then
     alias -g P='| peco --select-1'
     alias cdg='cd $(ghq list -p | peco)'
@@ -148,6 +149,9 @@ elif [ -x "$(which peco)" ] ; then
 
     function ptvi() {
         vim $(pt "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
+    }
+    function rgvi() {
+        vim $(rg "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
     }
 fi
 

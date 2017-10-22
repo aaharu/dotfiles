@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -x "$(which go)" && $GOPATH == $HOME ] ; then
+if [ -x "$(which go)" ] && [ "$GOPATH" = "$HOME" ] ; then
     go get -u github.com/motemen/ghq
     go get -u github.com/peco/peco/cmd/peco
     go get -u github.com/github/hub

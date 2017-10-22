@@ -97,9 +97,9 @@ if v:version >= 704
     call dein#begin(expand('~/.vim/dein/'))
 
     call dein#add('Shougo/dein.vim')
-    call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-    call dein#add('Shougo/unite.vim', {'build' : 'make', 'depends' : ['vimproc.vim']})
-    call dein#add('ujihisa/unite-colorscheme', {'depends' : ['unite.vim']})
+    call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+    call dein#add('Shougo/unite.vim', {'build': 'make', 'depends': ['vimproc.vim']})
+    call dein#add('ujihisa/unite-colorscheme', {'depends': ['unite.vim']})
     if has('lua')
         call dein#add('Shougo/neocomplete.vim')
     else
@@ -109,6 +109,8 @@ if v:version >= 704
     call dein#add('tpope/vim-fugitive')
     call dein#add('tfnico/vim-gradle')
     call dein#add('scrooloose/nerdtree')
+    call dein#add('junegunn/fzf', {'build': './install --all', 'merged': 0})
+    call dein#add('junegunn/fzf.vim', {'depends': 'fzf'})
 
     call dein#end()
 

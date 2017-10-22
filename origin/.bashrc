@@ -1,7 +1,3 @@
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
-
-[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
-
 if [ "$(uname)" = "Linux" ] ; then
     alias ls='ls -F --color'
     alias la='ls -ahF --color'
@@ -20,7 +16,7 @@ alias em='emacs -nw'
 alias sc='screen'
 alias svi='sudo vim'
 
-if [ -f ~/etc/git-completion/git-completion.bash -a -f ~/etc/git-completion/git-prompt.sh ] ; then
+if [ -f ~/etc/git-completion/git-completion.bash ] && [ -f ~/etc/git-completion/git-prompt.sh ] ; then
     . ~/etc/git-completion/git-completion.bash
     . ~/etc/git-completion/git-prompt.sh
     export PS1='[\h \W $(__git_ps1 "@%s")]$ '
@@ -28,14 +24,14 @@ else
     export PS1='[\h \W]$ '
 fi
 
-export GOPATH="$HOME/.go"
+export GOPATH="$HOME"
 export PATH="$HOME/bin:$PATH:$GOPATH/bin"
 
 cvs() {
     if [ "$1" = "cat" ] ; then
-        command cvs update -p $2
+        command cvs update -p "$2"
     else
-        command cvs $@
+        command cvs "$@"
     fi
 }
 
@@ -68,6 +64,35 @@ fs() {
         find . -type d -name '.svn' -prune -o -type d -name '.git' -prune -o -type f -print0 | xargs -0 grep "$@"
     fi
 }
+
+if [ -x "$(which fzf)" ] ; then
+    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+    alias cdg='cd $(ghq list -p | fzf --ansi --exit-0)'
+
+    ptvi() {
+        vim $(pt "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
+    }
+    rgvi() {
+        vim $(rg "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
+    }
+elif [ -x "$(which peco)" ] ; then
+    alias -g P='| peco --select-1'
+    alias cdg='cd $(ghq list -p | peco)'
+
+    peco-select-history() {
+        declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$READLINE_LINE")
+        READLINE_LINE="$l"
+        READLINE_POINT=${#l}
+    }
+    bind -x '"\C-r": peco-select-history'
+
+    ptvi() {
+        vim $(pt "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
+    }
+    rgvi() {
+        vim $(rg "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
+    }
+fi
 
 HISTFILE=~/.bash_history
 HISTSIZE=9999
