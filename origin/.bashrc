@@ -25,7 +25,7 @@ else
 fi
 
 export GOPATH="$HOME"
-export PATH="$HOME/bin:$PATH:$GOPATH/bin"
+export PATH="$HOME/bin:$PATH:$GOPATH/bin:$HOME/.vim/dein/repos/github.com/junegunn/fzf/bin"
 
 cvs() {
     if [ "$1" = "cat" ] ; then
@@ -73,7 +73,7 @@ if [ -x "$(which fzf)" ] ; then
         vim $(pt "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
     }
     rgvi() {
-        vim $(rg "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
+        vim $(rg --line-number "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
     }
 elif [ -x "$(which peco)" ] ; then
     alias -g P='| peco --select-1'
@@ -90,7 +90,7 @@ elif [ -x "$(which peco)" ] ; then
         vim $(pt "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
     }
     rgvi() {
-        vim $(rg "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
+        vim $(rg --line-number "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
     }
 fi
 

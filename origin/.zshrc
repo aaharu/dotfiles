@@ -24,7 +24,7 @@ alias -g G='| grep'
 export GOPATH="$HOME"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.nodebrew/current/bin:$PATH"
-export PATH="$HOME/bin:$PATH:$GOPATH/bin"
+export PATH="$HOME/bin:$PATH:$GOPATH/bin:$HOME/.vim/dein/repos/github.com/junegunn/fzf/bin"
 
 bindkey -e
 autoload -U compinit
@@ -37,28 +37,19 @@ export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
 
-RED=$'%{\e[0;31m%}'
-GREEN=$'%{\e[0;32m%}'
-BLUE=$'%{\e[0;34m%}'
-DARK_GRAY=$'%{\e[1;30m%}'
-YELLOW=$'%{\e[1;33m%}'
-LIGHT_PURPLE=$'%{\e[1;35m%}'
-DEFAULT=$'%{\e[1;m%}'
-
 autoload -Uz is-at-least
 if is-at-least 4.3.10; then
     autoload -Uz vcs_info
     zstyle ':vcs_info:*' enable git svn
-    zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}[%s %b] %{'$reset_color'%}'
+    zstyle ':vcs_info:*' formats '%F{red}[%s %b]%f '
     precmd () {
         LANG=en_US.UTF-8 vcs_info
-        PROMPT="${vcs_info_msg_0_}% %(?.$GREEN%B(´･_･%)%b.$RED%B($(echo '\`')･_･%)%b)$DEFAULT %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
+        PROMPT="${vcs_info_msg_0_}% %(?.%F{green}%B(´･_･%)%b%f.%F{red}%B($(echo '\`')･_･%)%b%f) %(?.%F{yellow}.%F{red})%(!.#.$)%f "
     }
 else
-    PROMPT="%(?.$GREEN%B(´･_･%)%b.$RED%B($(echo '\`')･_･%)%b)$DEFAULT %(?.$YELLOW.$RED)%(!.#.$) $DEFAULT"
+    PROMPT="%(?.%F{green}%B(´･_･%)%b%f.%F{red}%B($(echo '\`')･_･%)%b%f) %(?.%F{yellow}.%F{red})%(!.#.$)%f "
 fi
-SHORTHOST=$(hostname)
-RPROMPT="%(?..$RED%?) $DARK_GRAY%* $BLUE${USER}$DEFAULT@$GREEN$SHORTHOST$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
+RPROMPT="%(?..%F{red}%?%f) %* %F{blue}${USER}%f@%F{green}$(hostname)%f:%F{magenta}%~%f"
 
 setopt no_beep
 unsetopt complete_aliases
@@ -127,7 +118,7 @@ if [ -x "$(which fzf)" ] ; then
         vim $(pt "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
     }
     function rgvi() {
-        vim $(rg "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
+        vim $(rg --line-number "$@" | fzf --exit-0 --select-1 | awk -F':' '{print "-c " $2 " " $1}')
     }
 elif [ -x "$(which peco)" ] ; then
     alias -g P='| peco --select-1'
@@ -151,7 +142,7 @@ elif [ -x "$(which peco)" ] ; then
         vim $(pt "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
     }
     function rgvi() {
-        vim $(rg "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
+        vim $(rg --line-number "$@" | peco --select-1 --query "$LBUFFER" | awk -F':' '{print "-c " $2 " " $1}')
     }
 fi
 
