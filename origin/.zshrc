@@ -49,7 +49,12 @@ if is-at-least 4.3.10; then
 else
     PROMPT="%(?.%F{green}%B(´･_･%)%b%f.%F{red}%B($(echo '\`')･_･%)%b%f) %(?.%F{yellow}.%F{red})%(!.#.$)%f "
 fi
-RPROMPT="%(?..%F{red}%?%f) %* %F{blue}${USER}%f@%F{green}$(hostname)%f:%F{magenta}%~%f"
+RED=$'%{\e[0;31m%}'
+GREEN=$'%{\e[0;32m%}'
+BLUE=$'%{\e[0;34m%}'
+LIGHT_PURPLE=$'%{\e[1;35m%}'
+DEFAULT=$'%{\e[1;m%}'
+RPROMPT="%(?..$RED%?)$DEFAULT %* &BLUE${USER}$DEFAULT@$GREEN$(hostname)$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
 
 setopt no_beep
 unsetopt complete_aliases
