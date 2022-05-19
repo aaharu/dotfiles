@@ -6,5 +6,8 @@
 	br = branch
 	ci = commit
 	di = diff
+	sw = switch
 [core]
 	editor = vim
+[github]
+	user = aaharu

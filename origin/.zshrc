@@ -52,9 +52,10 @@ fi
 RED=$'%{\e[0;31m%}'
 GREEN=$'%{\e[0;32m%}'
 BLUE=$'%{\e[0;34m%}'
+YELLOW=$'%{\e[1;33m%}'
 LIGHT_PURPLE=$'%{\e[1;35m%}'
 DEFAULT=$'%{\e[1;m%}'
-RPROMPT="%(?..$RED%?)$DEFAULT %* &BLUE${USER}$DEFAULT@$GREEN$(hostname)$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
+RPROMPT="%(?..$RED%?)$DEFAULT $YELLOW%*$DEFAULT $BLUE${USER}$DEFAULT@$GREEN$(hostname)$DEFAULT:$LIGHT_PURPLE%~$DEFAULT"
 
 setopt no_beep
 unsetopt complete_aliases
