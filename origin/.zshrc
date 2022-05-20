@@ -21,11 +21,6 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
 
-export GOPATH="$HOME"
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="$HOME/.nodebrew/current/bin:$PATH"
-export PATH="$HOME/bin:$PATH:$GOPATH/bin:$HOME/.vim/dein/repos/github.com/junegunn/fzf/bin"
-
 bindkey -e
 autoload -U compinit
 compinit -u
@@ -155,3 +150,28 @@ fi
 HISTFILE=~/.zsh_history
 HISTSIZE=99999
 SAVEHIST=99999
+
+export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [ "${PATH#/usr/local/bin:}" = "${PATH}" ]; then
+  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+fi
+if [ "${PATH#$HOME/bin:}" = "${PATH}" ]; then
+    export PATH="$HOME/bin:$PATH:$HOME/go/bin"
+fi
+
+#eval "$(direnv hook zsh)"
+#if [ "${PATH#$HOME/.rbenv/shims:}" = "${PATH}" ]; then
+#    eval "$(rbenv init -)"
+#fi
+#if [ "${PATH#$HOME/.nodenv/shims:}" = "${PATH}" ]; then
+#    eval "$(nodenv init -)"
+#fi
+#eval "$(goenv init -)"
+#if [ "${PATH#$HOME/.goenv/shims:}" = "${PATH}" ]; then
+#    export PATH="$HOME/.goenv/shims:$PATH"
+#fi
+#if [ "${PATH#$HOME/.pyenv/shims:}" = "${PATH}" ]; then
+#    eval "$(pyenv init --path)"
+#fi
